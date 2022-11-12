@@ -35,7 +35,7 @@ visual_1 <- learning_pref |>
   ggplot(aes(
     x = District
   )) +
-  geom_histogram() 
+  geom_histogram()
 visual_1
   
 ```
