@@ -72,5 +72,3 @@ m1.lm |>
 This table gives us more information, as it indicates that the P-Value for age is 0. Because the p-value is less than 0.05, there is enough evidence to reject the null hypothesis, because the value is so extreme that if you did this test over and over again, we would expect to almost never (because the p-values are rounded) see an observed difference this extreme. Therefore, we can say that age is a statistically significant factor (or there are statistically significant differences in average points scored between different ages). 
 
 
-
-
