@@ -13,30 +13,46 @@ output:
 
 I am interested in exploring data related to...
 
-looking at if there is a relationship between the height of NHL players and the number of career goals they have (do shorter/taller players tend to score more goals/be more successful?). 
+looking at if there is a relationship between the height, weight, and age of NBA players and the number of average career points they scored  (do shorter/taller or relatively heavier/lighter players tend to score more goals/be more successful?). 
 
 ## Milestone 2
 ```{r}
 library(tidyverse)
 library(readr)
+library(stringr)
 
 
-learning_pref <- read_csv("learning_pref.csv", show_col_types = FALSE)
-learning_pref
+game_stats <- read_csv("all_seasons.csv", show_col_types = FALSE)
+game_subset <- game_stats |>
+  filter(draft_year %in% 2010:2020)
 ```
 
-How do remote vs. blended (part in-person, part remote) learning preferences vary based on ethnicity, grade level, and gender? I hypothesize, that as grade level increases, preference for remote learning will increase. I do not think that gender will be an influential factor, and I do not think ethnicity will be an influential factor. I think that grade level will be the most influential factor, because I think that at a young age, in-person, and/or blended, classes are very important for group discussions, class activities, and making friendships which all aid in a child's development. I think that as students get older, these types of activities are less common because they have acquired the necessary skills for completing activities on their own, making friends etc. Therefore, I think that as grade level increases, so will the preference for remote learning. My outcome variable is remote learning preference which is collected based off students who have attended school in-person at least once since September 16, 2020. My explanatory variables are gender (male or female), race (White, Asian, Black, Hispanic, Multi-Racial, Native American, Unknown), and grade level (PK, OK, 1-12). If I observe greater preference for remote learning in the higher grades, this would support my hypothesis. If I observe less preference for remote learning in higher grades, this would go against my hypothesis. Furthermore, if I observe no change in remote learning preference based on gender and race, this supports by hypothesis, while any changes will go against my hypothesis. When I run my regression of remote learning preference on the indicated variables, a positive, significant coefficient would indicate support for my hypothesis. 
+Does the age, weight, and/or height of NBA players affect their average number of points scored over a around a twenty year period? I hypothesize, that younger and taller players will have a greater number of average points scored, and that weight will have a large influence, if any. I think that height and age will be the most influential factors, because I think that a relatively younger and taller player will aid in a players ability to score points, therefore leading to a positive correlation. Therefore, I think that as lower ages, and taller players, will have higher average point records. My outcome variable is average points scored (pts). My explanatory variables are age (age), height (player height), and weight (player_weight). If I observe a higher record of pts for taller and younger players, this would support my hypothesis. If I observe less pts for younger and taller players, this would go against my hypothesis. Furthermore, if I observe no change in average points scored based on height and age, and/or if i observe higher pts based of weight, this would go against my hypothesis. When I run my regression of pts on the indicated variables, a positive, significant coefficient would indicate support for my hypothesis. 
 
 
 #Milestone 3
 
 ```{r}
-visual_1 <- learning_pref |>
+visual_1 <- game_stats |>
   ggplot(aes(
-    x = District
+    x = age,
+    y = pts
   )) +
-  geom_histogram()
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = lm, formula = y ~ splines::bs(x, 3), se = FALSE) +
+  labs(
+    x = "Age in Years",
+    y = "Average Points Scored"
+  ) +
+  theme_bw()
+  
 visual_1
   
 ```
+
+This graph demonstrates that there appears to be a relationship between age and average points scored. I looks like average points scored peaks when a player is around 30 years old, and decreases as they get older. However, this graph does not demonstrate a very strong relationship, and this further evaluations will need to be conducted.  
+
+
+
+
 
