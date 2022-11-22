@@ -54,6 +54,7 @@ visual_1
 This graph demonstrates that there appears to be a relationship between age and average points scored. I looks like average points scored peaks when a player is around 30 years old, and decreases as they get older. However, this graph does not demonstrate a very strong relationship, and this further evaluations will need to be conducted.  
 
 
+## Milestone 4
 ```{r}
 library(broom)
 library(knitr)
