@@ -50,8 +50,25 @@ visual_1
   
 ```
 
+
 This graph demonstrates that there appears to be a relationship between age and average points scored. I looks like average points scored peaks when a player is around 30 years old, and decreases as they get older. However, this graph does not demonstrate a very strong relationship, and this further evaluations will need to be conducted.  
 
+
+```{r}
+library(broom)
+library(knitr)
+
+m1.lm <- lm(age ~ pts, data = game_stats)
+
+m1.lm |>
+  tidy() |>
+  kable(capiton = "Coefficient Estimate for Age to Average Points Scored in the NBA", 
+        col_names = c("Predictor","Estimate", "Std.error", "Statistic", "P-Value") , 
+        digits = c(0,2,3,2,4))
+
+```
+
+This table gives us more information, as it indicates that the P-Value for age is 0. Because the p-value is less than 0.05, there is enough evidence to reject the null hypothesis, because the value is so extreme that if you did this test over and over again, we would expect to almost never (because the p-values are rounded) see an observed difference this extreme. Therefore, we can say that age is a statistically significant factor (or there are statistically significant differences in average points scored between different ages). 
 
 
 
