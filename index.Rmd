@@ -177,7 +177,7 @@ m4.lm <- lm(pts ~ age + player_weight + player_height, data = game_stats)
 m4.lm |>
   tidy() |>
   kable(capiton = "Coefficient Estimate for Age, Weight, and Height Compared to Average Points Scored in the NBA", 
-        col_names = c("Predictor","Estimate", "Std.error", "Statistic", "P-Value") , 
+        col_names = c("Predictor","Estimate", "Std.error", "Statistic", "P-Value"), 
         digits = c(0,2,3,2,4))
 ```
 
