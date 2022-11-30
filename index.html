@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["all_seasons.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","learning_pref.csv"]}
+  {"type":"character","attributes":{},"value":["all_seasons.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-4-2.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-5-2.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","learning_pref.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1517,10 +1517,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="milestone-1-project-thoughts">Milestone 1: Project thoughts</h2>
-<p>I am interested in exploring data related to…</p>
-<p>looking at if there is a relationship between the height, weight, and age of NBA players and the number of average career points they scored (do shorter/taller or relatively heavier/lighter players tend to score more goals/be more successful?).</p>
-<h2 id="milestone-2">Milestone 2</h2>
+<h2 id="introduction">Introduction</h2>
+<p>This project seeks to investigate if there is a relationship/correlation between the height, weight, and age of NBA players, and their average number of points scored per game. My research question is: does one’s height, weight, and age tend to correlate to a player’s avergae number of points scored per game over a 10 year period? This project will look at data covering players’ average points scored per game from 2010-2020. I hypothesize that younger players, taller players, and those who are in the middle of the weight distribution, will tend to have a higher number of average points scored per game over this time period. Seeing whether or not height, age, and weight have a relationship to a player’s average points scored per game can provide very interesting insight for evaluating top players, evaluating a team’s success, and possibly predicting the likelihood of an individual player’s future success.</p>
+<h2 id="data">Data</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
@@ -1530,39 +1529,151 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span></span>
 <span><span class='va'>game_stats</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"all_seasons.csv"</span>, show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span><span class='va'>game_subset</span> <span class='op'>&lt;-</span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>draft_year</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2020</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>draft_year</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2020</span><span class='op'>)</span></span>
+<span><span class='va'>game_stats</span></span></code></pre>
 </div>
+<pre><code># A tibble: 12,305 × 22
+    ...1 playe…¹ team_…²   age playe…³ playe…⁴ college country draft…⁵
+   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1     0 Dennis… CHI        36    198.    99.8 Southe… USA     1986   
+ 2     1 Dwayne… LAC        28    216.   118.  Florida USA     1990   
+ 3     2 Earl C… TOR        39    206.    95.3 Detroi… USA     1979   
+ 4     3 Ed O&#39;B… DAL        24    203.   101.  UCLA    USA     1995   
+ 5     4 Ed Pin… MIA        34    206.   109.  Villan… USA     1985   
+ 6     5 Eddie … HOU        38    201.    97.5 Illino… USA     1981   
+ 7     6 Eddie … LAL        25    198.    86.2 Temple  USA     1994   
+ 8     7 Elden … LAL        28    213.   113.  Clemson USA     1990   
+ 9     8 Eldrid… ATL        29    193.    86.2 Washin… USA     1992   
+10     9 Elliot… MIL        28    183.    72.6 Memphis USA     1991   
+# … with 12,295 more rows, 13 more variables: draft_round &lt;chr&gt;,
+#   draft_number &lt;chr&gt;, gp &lt;dbl&gt;, pts &lt;dbl&gt;, reb &lt;dbl&gt;, ast &lt;dbl&gt;,
+#   net_rating &lt;dbl&gt;, oreb_pct &lt;dbl&gt;, dreb_pct &lt;dbl&gt;, usg_pct &lt;dbl&gt;,
+#   ts_pct &lt;dbl&gt;, ast_pct &lt;dbl&gt;, season &lt;chr&gt;, and abbreviated
+#   variable names ¹​player_name, ²​team_abbreviation, ³​player_height,
+#   ⁴​player_weight, ⁵​draft_year</code></pre>
 </div>
-<p>Does the age, weight, and/or height of NBA players affect their average number of points scored over a around a twenty year period? I hypothesize, that younger and taller players will have a greater number of average points scored, and that weight will have a large influence, if any. I think that height and age will be the most influential factors, because I think that a relatively younger and taller player will aid in a players ability to score points, therefore leading to a positive correlation. Therefore, I think that as lower ages, and taller players, will have higher average point records. My outcome variable is average points scored (pts). My explanatory variables are age (age), height (player height), and weight (player_weight). If I observe a higher record of pts for taller and younger players, this would support my hypothesis. If I observe less pts for younger and taller players, this would go against my hypothesis. Furthermore, if I observe no change in average points scored based on height and age, and/or if i observe higher pts based of weight, this would go against my hypothesis. When I run my regression of pts on the indicated variables, a positive, significant coefficient would indicate support for my hypothesis.</p>
-<p>#Milestone 3</p>
+<p>The data this project uses is called game_stats. This data set consists of 12,305 different players and includes different demographics such as a player’s team, age, height, weight, college, etc. The outcome variable for this project is average points scored per game (pts). The explanatory variables are age (age), height (player_height), and weight (player_weight). These data points are all collected over a ten year period, from 2010-2020. If, in the regressions and evaluations, the data demonstrates a higher record of points for taller, younger players, and median-weight players, this would support the hypothesis. If the data indicates less, or no change in, average points scored per game for younger, taller, and median weight players, these findings would invalidate the hypothesis. When a regression is performed on the average number of points per game, on the indicated variables, a p-value less than 0.05 would indicate support for the hypothesis, demonstrating statistical significance of the variable(s). Finally, a positive, significant, coefficient in the confidence interval would indicate support for the hypothesis.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='va'>pts</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Average Points Scored Per Game"</span><span class='op'>)</span> </span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<h2 id="results">Results</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>visual_1</span> <span class='op'>&lt;-</span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>age</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>pts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>pts</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
 <span>    x <span class='op'>=</span> <span class='va'>age</span>,</span>
 <span>    y <span class='op'>=</span> <span class='va'>pts</span></span>
-<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='va'>lm</span>, formula <span class='op'>=</span> <span class='va'>y</span> <span class='op'>~</span> <span class='fu'>splines</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/splines/bs.html'>bs</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>3</span><span class='op'>)</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
 <span>    x <span class='op'>=</span> <span class='st'>"Age in Years"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored"</span></span>
-<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored Per Game"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Age and Average Points Scored Per Game"</span></span>
+<span>    <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span>  </span>
 <span><span class='va'>visual_1</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<p>This graph demonstrates that there appears to be a relationship between age and average points scored. I looks like average points scored peaks when a player is around 30 years old, and decreases as they get older. However, this graph does not demonstrate a very strong relationship, and this further evaluations will need to be conducted.</p>
-<h2 id="milestone-4">Milestone 4</h2>
+<p>This graph demonstrates that there appears to be a relationship between age and average points scored. It looks like average points scored per game peaks when a player is around 28 years old, and decreases as they get older. However, a regression must be conducted to determine if this graph demonstrates a relationship that is statistically significant.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>visual_2</span> <span class='op'>&lt;-</span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='va'>player_weight</span>,</span>
+<span>    y <span class='op'>=</span> <span class='va'>pts</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Average Weight (Kg)"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored Per Game"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Player Weight and Average Points Scored Per Game"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  </span>
+<span><span class='va'>visual_2</span></span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>player_weight</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>pts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>pts</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='va'>player_weight</span>,</span>
+<span>    y <span class='op'>=</span> <span class='va'>pts</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Player Weight in kg"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored Per Game"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Player Weight and Average Points Scored Per Game"</span></span>
+<span>    <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-2.png" width="624" /></p>
+</div>
+<p>This graph demonstrates that there is seemingly no relationship between player weight and average points scored. However, a regression must be conducted to determine if this graph demonstrates a relationship (or lack there of) that is statistically significant.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>visual_3</span> <span class='op'>&lt;-</span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='va'>player_height</span>,</span>
+<span>    y <span class='op'>=</span> <span class='va'>pts</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='va'>lm</span>, se<span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Player Height (cm)"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Player Height and Average Points Scored Per Game"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  </span>
+<span><span class='va'>visual_3</span></span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span> <span class='va'>game_stats</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>player_height</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>pts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>pts</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='va'>player_height</span>,</span>
+<span>    y <span class='op'>=</span> <span class='va'>pts</span></span>
+<span>    <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Height in cm"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Average Points Scored Per Game"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Player Height and Average Points Scored Per Game"</span></span>
+<span>    <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-2.png" width="624" /></p>
+</div>
+<p>This graph demonstrates that there appears a slight negative relationship between player height and average points scored. However, this graph does not demonstrate a very strong relationship, and further evaluations will need to be conducted to determine if this relationship exists and is statistically significant.</p>
+<h3 id="regression-results">Regression Results</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>m1.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>age</span> <span class='op'>~</span> <span class='va'>pts</span>, data <span class='op'>=</span> <span class='va'>game_stats</span><span class='op'>)</span></span>
-<span></span>
+<span><span class='va'>m1.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pts</span> <span class='op'>~</span> <span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>game_stats</span><span class='op'>)</span></span>
 <span><span class='va'>m1.lm</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>capiton <span class='op'>=</span> <span class='st'>"Coefficient Estimate for Age to Average Points Scored in the NBA"</span>, </span>
@@ -1582,23 +1693,153 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">27.04</td>
-<td style="text-align: right;">0.066</td>
-<td style="text-align: right;">408.21</td>
+<td style="text-align: right;">7.87</td>
+<td style="text-align: right;">0.341</td>
+<td style="text-align: right;">23.09</td>
 <td style="text-align: right;">0.0000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">pts</td>
+<td style="text-align: left;">age</td>
 <td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.012</td>
 <td style="text-align: right;">0.90</td>
 <td style="text-align: right;">0.3679</td>
 </tr>
 </tbody>
 </table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m2.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pts</span> <span class='op'>~</span> <span class='va'>player_weight</span>, data <span class='op'>=</span> <span class='va'>game_stats</span><span class='op'>)</span></span>
+<span><span class='va'>m2.lm</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>capiton <span class='op'>=</span> <span class='st'>"Coefficient Estimate of Wight Compared to Average Points Scored in the NBA"</span>, </span>
+<span>        col_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Predictor"</span>,<span class='st'>"Estimate"</span>, <span class='st'>"Std.error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span> , </span>
+<span>        digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<p>This table gives us more information, as it indicates that the P-Value for age is 0. Because the p-value is less than 0.05, there is enough evidence to reject the null hypothesis, because the value is so extreme that if you did this test over and over again, we would expect to almost never (because the p-values are rounded) see an observed difference this extreme. Therefore, we can say that age is a statistically significant factor (or there are statistically significant differences in average points scored between different ages).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">9.45</td>
+<td style="text-align: right;">0.437</td>
+<td style="text-align: right;">21.66</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">player_weight</td>
+<td style="text-align: right;">-0.01</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-2.96</td>
+<td style="text-align: right;">0.0031</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m3.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pts</span> <span class='op'>~</span> <span class='va'>player_height</span>, data <span class='op'>=</span> <span class='va'>game_stats</span><span class='op'>)</span></span>
+<span><span class='va'>m3.lm</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>capiton <span class='op'>=</span> <span class='st'>"Coefficient Estimate of Height Compared to Average Points Scored in the NBA"</span>, </span>
+<span>        col_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Predictor"</span>,<span class='st'>"Estimate"</span>, <span class='st'>"Std.error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span> , </span>
+<span>        digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">15.59</td>
+<td style="text-align: right;">1.181</td>
+<td style="text-align: right;">13.20</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">player_height</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">-6.28</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>m4.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pts</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>player_weight</span> <span class='op'>+</span> <span class='va'>player_height</span>, data <span class='op'>=</span> <span class='va'>game_stats</span><span class='op'>)</span></span>
+<span><span class='va'>m4.lm</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>capiton <span class='op'>=</span> <span class='st'>"Coefficient Estimate for Age, Weight, and Height Compared to Average Points Scored in the NBA"</span>, </span>
+<span>        col_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Predictor"</span>,<span class='st'>"Estimate"</span>, <span class='st'>"Std.error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span> , </span>
+<span>        digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">19.18</td>
+<td style="text-align: right;">1.588</td>
+<td style="text-align: right;">12.08</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.6979</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">player_weight</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">3.87</td>
+<td style="text-align: right;">0.0001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">player_height</td>
+<td style="text-align: right;">-0.07</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">-6.73</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This regression provides a lot of information about the relationship between average points scored per game and player age, weight, and height. The p-value of age increased from 0.38 to 0.70. Because the p-value maintains a value greater than 0.05, there is not enough evidence to reject the null hypothesis (that there is zero relationship between age and average points scored per game). This value demonstrates that if we were to run this regression numerous times (with height and weight held constant), we would observe no relationship between these two variables around 70% of the time. Therefore, age is not a statistically significant variable, and appears to have little to no relationship to a player’s average points scored per game.</p>
+<p>The p-value of player weight in the multivariate regression is 0.0001. Because this value is less than 0.05, the p-value demonstrates that there is enough evidence to reject the null hypothesis. This means that player weight is a statistically significant variable, and likely has an relationship/correlation with the average points scored per game (with age and height held constant). <strong>Evaluation of positive or negative relationship?</strong></p>
+<p>Finally, the p-value of player height is 0.0000. Because this value is also less than 0.05, we can make the same conclusion: there is enough evidence to reject the null hypothesis. This means that player height is a statistically significant variable, and likely has a relationship/correlation with average points scored per game (with age and weight held constant). <strong>Evaluation of positive or negative relationship?</strong></p>
+<h3 id="confidence-intervalstandard-error">Confidence Interval/Standard Error?</h3>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>– describe coefficients and what they mean
+– what the significance based off p-values
+– confidence interval</p>
+<h2 id="conclusion">Conclusion:</h2>
+<p>These regressions indicate a (<strong>positive/negative</strong>) relationship between player weight and average points scored per game, a (<strong>positive/negative</strong>) relationship between player height and average points scored per game, and no relationship between age and average points scored per game. While these results provide a lot of information about the relationships between these variables, it is important to remember that there are always other possible confounding factors that were not accounted for. Therefore, any observed relationships are correlative and cannot be deemed causal. For example, it is possible that a player’s team, and the team’s success may affect a player’s average points scored per game. If a team is less successful overall, their players will naturally have a lower rate of average points scored per game. Additionally, it is also possible that a player’s given playing time also affects one’s average points scored per game. If a player is not given much playing time, he will have less opportunities to score points, and thus have a lower rate of average points scored per game. Therefore, while this study’s results indicate a (**Strong/Weak) correlation, we cannot say that this relationship is causal. This analysis is limited by only accounting for three possible confounding factors (age, height, and weight). This study could be improved and strengthened by accounting for additional possible confounding factors such as a team’s success and a player’s given playing time.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
