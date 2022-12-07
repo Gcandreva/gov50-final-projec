@@ -11,7 +11,7 @@ output:
 
 ## Introduction
 
-  This project seeks to investigate if there is a relationship/correlation between the height, weight, and age of NBA players, and their average number of points scored per game. My research question is: does one's height, weight, and age tend to correlate to  a player's avergae number of points scored per game over a 10 year period? This project will look at data covering players' average points scored per game from 2010-2020. I hypothesize that younger players, taller players, and those who are in the middle of the weight distribution, will tend to have a higher number of average points scored per game over this time period. Seeing whether or not height, age, and weight have a relationship to a player's average points scored per game can provide very interesting insight for evaluating top players, evaluating a team's success, and possibly predicting the likelihood of an individual player's future success. 
+  This project seeks to investigate if there is a relationship/correlation between the height, weight, and age of NBA players, and their average number of points scored per game. My research question is: does one's height, weight, and age tend to correlate to  a player's average number of points scored per game over a 10 year period? This project will look at data covering players' average points scored per game from 2010-2020. I hypothesize that younger players, taller players, and those who are in the middle of the weight distribution, will tend to have a higher number of average points scored per game over this time period. Seeing whether or not height, age, and weight have a relationship to a player's average points scored per game can provide very interesting insight for evaluating top players, evaluating a team's success, and possibly predicting the likelihood of an individual player's future success. 
 
 
 ## Data 
@@ -64,7 +64,7 @@ visual_1
   
 ```
 
-This graph demonstrates that there appears to be a relationship between age and average points scored. It looks like average points scored per game peaks when a player is around 28 years old, and decreases as they get older. However, a regression must be conducted to determine if this graph demonstrates a relationship that is statistically significant.   
+This graph demonstrates that there appears to be a relationship between age and average points scored. It looks like average points scored per game peaks when a player is around 28 years old, and decreases as they get older. However, a regression must be conducted to determine if this graph demonstrates a relationship that is statistically significant while controlling for other variables.   
 
 
 ```{r}
@@ -83,26 +83,9 @@ visual_2 <- game_stats |>
   theme_bw()
   
 visual_2
-
-
- game_stats |>
-  group_by(player_weight) |>
-  summarize(pts = mean(pts, na.rm = TRUE)) |>
-  ggplot(aes(
-    x = player_weight,
-    y = pts
-    )) +
-  geom_line() +
-  geom_point() +
-  labs(
-    x = "Player Weight in kg",
-    y = "Average Points Scored Per Game", 
-    title = "Relationship between Player Weight and Average Points Scored Per Game"
-    ) +
-  theme_bw()
 ```
 
-This graph demonstrates that there is seemingly no relationship between player weight and average points scored. However, a regression must be conducted to determine if this graph demonstrates a relationship (or lack there of) that is statistically significant. 
+This graph demonstrates that there is seemingly no, or even a slightly negative, relationship between player weight and average points scored. However, this graph does not demonstrate a very strong relationship, and a regression must be conducted to determine if a relationship/correlation exists between these variables and if the results are statistically significant while controlling for the other variables. 
 
 ```{r}
 visual_3 <- game_stats |>
@@ -120,27 +103,10 @@ visual_3 <- game_stats |>
   theme_bw()
   
 visual_3
-
-
- game_stats |>
-  group_by(player_height) |>
-  summarize(pts = mean(pts, na.rm = TRUE)) |>
-  ggplot(aes(
-    x = player_height,
-    y = pts
-    )) +
-  geom_line() +
-  geom_point() +
-  labs(
-    x = "Height in cm",
-    y = "Average Points Scored Per Game", 
-    title = "Relationship between Player Height and Average Points Scored Per Game"
-    ) +
-  theme_bw()
   
 ```
 
-This graph demonstrates that there appears a slight negative relationship between player height and average points scored. However, this graph does not demonstrate a very strong relationship, and further evaluations will need to be conducted to determine if this relationship exists and is statistically significant.
+This graph demonstrates that there appears a slight negative relationship between player height and average points scored. However, this graph does not demonstrate a very strong relationship, and a regression must be run to determine if a relationship/correlation exists between these variables and if the results are statistically significant while controlling for the other variables.
 
 
 ### Regression Results
@@ -181,23 +147,25 @@ m4.lm |>
         digits = c(0,2,3,2,4))
 ```
 
-This regression provides a lot of information about the relationship between average points scored per game and player age, weight, and height. The p-value of age increased from 0.38 to 0.70. Because the p-value maintains a value greater than 0.05, there is not enough evidence to reject the null hypothesis (that there is zero relationship between age and average points scored per game). This value demonstrates that if we were to run this regression numerous times (with height and weight held constant), we would observe no relationship between these two variables around 70% of the time. Therefore, age is not a statistically significant variable, and appears to have little to no relationship to a player's average points scored per game. 
+This regression provides a lot of information about the relationship between average points scored per game and player age, weight, and height. The p-value of age increased from 0.38 to 0.70. Because the p-value maintains a value greater than 0.05, there is not enough evidence to reject the null hypothesis (that there is zero relationship between age and average points scored per game). This value demonstrates that if we were to run this regression numerous times (with height and weight held constant), we would observe no relationship between these two variables around 70% of the time. Therefore, age is not a statistically significant variable, and appears to have little to no relationship to a player's average points scored per game of those sampled. 
 
-The p-value of player weight in the multivariate regression is 0.0001. Because this value is less than 0.05, the p-value demonstrates that there is enough evidence to reject the null hypothesis. This means that player weight is a statistically significant variable, and likely has an relationship/correlation with the average points scored per game (with age and height held constant). **Evaluation of positive or negative relationship?**
+The p-value of player weight in the multivariate regression is approximately 0.0001. Because this value is less than 0.05, the p-value demonstrates that there is enough evidence to reject the null hypothesis. This means that player weight is a statistically significant variable. Additionally, we can see that there is a slightly positive relationship/correlation between the average points scored per game and player weight (with age and height held constant) of those sampled. We know there is a slight positive relationship because the positive estimate equals approximately 0.03. This value indicates that for every one-unit increase in a player's weight, their average points scored per game will increase by approximately 0.03 units. 
 
-Finally, the p-value of player height is 0.0000. Because this value is also less than 0.05, we can make the same conclusion: there is enough evidence to reject the null hypothesis. This means that player height is a statistically significant variable, and likely has a relationship/correlation with average points scored per game (with age and weight held constant). **Evaluation of positive or negative relationship?**
+Finally, the p-value of player height is 0.0000. Because this value is also less than 0.05, we can make the same conclusion: there is enough evidence to reject the null hypothesis. This means that player height is a statistically significant variable. Additionally, we can see that there is a slightly negative relationship/correlation between the average points scored per game and player height (with age and weight held constant) of those sampled. We know there is a slight negative relationship because the negative estimate equals approximately -0.07. This value indicates that for every one-unit increase in a player's weight, their average points scored per game will decrease by approximately 0.07 units.
 
 
 ### Confidence Interval/Standard Error? 
 
 ```{r}
-
+tidy(m4.lm, conf.int = TRUE, conf.level = 0.95)
 ```
 
--- describe coefficients and what they mean
--- what the significance based off p-values 
--- confidence interval 
+The p-value tests whether the values for the independent variables are far from zero. As explained above, the values of player height and weight are shown, by the p-value, to be far from zero, while age was not. These results are confirmed by the confidence intervals as the estimates fall within the low and high confidence intervals. Additionally, for player age, zero is included in the values of the confidence interval. This indicates that zero is a plausible value for player age. Therefore, the confidence interval supports the fact that we cannot reject the null hypothesis. By the same logic, zero is not included in the confidence intervals of player weight or height. Rather, the confidence interval of player weight is approximately 0.0147 - 0.0448. The positive confidence for player weight and points scored (controlling for other variables) supports our conclusion that there is a slight positive relationship between these two variables. Finally, the confidence interval of player height is about -0.0909 - -0.0499. The negative confidence interval supports our conclusion that there is a slight negative relationship between player height and average points scored. Therefore, the confidence intervals in the table above demonstrate that height and weight are statistically significantly far from zero, while age is not. 
+
 
 ## Conclusion: 
 
-These regressions indicate a (**positive/negative**) relationship between player weight and average points scored per game, a (**positive/negative**) relationship between player height and average points scored per game, and no relationship between age and average points scored per game. While these results provide a lot of information about the relationships between these variables, it is important to remember that there are always other possible confounding factors that were not accounted for. Therefore, any observed relationships are correlative and cannot be deemed causal. For example, it is possible that a player's team, and the team's success may affect a player's average points scored per game. If a team is less successful overall, their players will naturally have a lower rate of average points scored per game. Additionally, it is also possible that a player's given playing time also affects one's average points scored per game. If a player is not given much playing time, he will have less opportunities to score points, and thus have a lower rate of average points scored per game. Therefore, while this study's results indicate a (**Strong/Weak) correlation, we cannot say that this relationship is causal. This analysis is limited by only accounting for three possible confounding factors (age, height, and weight). This study could be improved and strengthened by accounting for additional possible confounding factors such as a team's success and a player's given playing time. 
+These regressions indicate a slightly positive relationship between player weight and average points scored per game for those sampled, while controlling for the other variables in question. Additionally, the regressions indicate a slightly negative relationship between player height and average points scored per game for those sampled while controlling for the other variables in question. Finally, the regression indicates there is no relationship between age and average points scored per game while controlling for the other variables. The confidence intervals also confirm this data. While these results provide a lot of information about the relationships between these variables, it is important to remember that there are always other possible confounding factors that were not accounted for. Therefore, any observed relationships are correlative and cannot be deemed causal. For example, a player's team, and the team's success may affect a player's average points scored per game. If a team is less successful overall, their players will naturally have a lower rate of average points scored per game. Additionally, it is also possible that a player's given playing time also affects one's average points scored per game. If a player is not given much playing time, he will have fewer opportunities to score points, and thus have a lower rate of average points scored per game. Therefore, while this study's results indicate strong, weak, and no correlations for the three different variables, we cannot say that this relationship is causal. This analysis is limited by only accounting for three possible confounding factors (age, height, and weight). This study could be improved and strengthened by accounting for additional possible confounding factors such as a team's success and a player's given playing time. 
+
+
+
